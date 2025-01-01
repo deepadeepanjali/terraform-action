@@ -1,0 +1,28 @@
+name: 'Terraform Provisioning'
+description: 'Initialize, plan, and apply Terraform configurations'
+
+inputs:
+  environment:
+    description: 'The environment to provision (e.g., "prod", "non-prod")'
+    required: true
+
+runs:
+  using: 'composite'  # The action type is composite
+  steps:
+
+    - name: "Terraform Init"
+      run: terraform init
+      working-directory: terraform
+      shell: bash
+
+     
+    - name: Terraform Plan
+      run: terraform plan ${{ inputs.environment }}.tfvars -o ${{ inputs.environment }}-tf.plan
+      working-directory: terraform
+      shell: bash
+      
+    - name: Terraform Apply
+      run: terraform apply ${{ inputs.environment }}-tf.plan
+      working-directory: terraform
+      shell: bash
+
