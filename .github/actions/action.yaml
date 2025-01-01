@@ -1,11 +1,14 @@
 name: 'Terraform Steps'
-description: 'Run Terraform from PRs. If terraform apply is yes, then apply terraform changes'
-
+description: 'Reusable Steps for Terraform Lifecycle'
 
 inputs:
-    target_environment:
-        required: true
-        
+  target_environment:
+    description: 'The target environment (non-prod, prod)'
+    required: true
+  terraform_apply:
+    description: 'Flag to apply Terraform changes (default: no)'
+    required: false
+    default: 'no'
    
         
 runs:
@@ -14,7 +17,7 @@ runs:
      - name: "Terraform Format"
        id: fmt
        run: |
-         echo "This is terraform -action repo"
+         echo "This is terraform-action repo"
          echo "The current directory is $(pwd)"
          terraform fmt -recursive
        working-directory: terraform
@@ -41,20 +44,15 @@ runs:
      - name: Terraform Plan
        id: plan
        run: |
-         echo '${{ inputs.target_environment }}'
-         echo 'Merged to Branch:${{ github.event.pull_request.base.ref }}'
+         echo 'environment: ${{ inputs.target_environment }}'
+         #echo 'Merged to Branch:${{ github.event.pull_request.base.ref }}'
          terraform plan -var-file=${{ inputs.target_environment}}.tfvars -out=${{ inputs.target_environment}}-tfplan
        working-directory: terraform 
        shell: bash
 
      - name: "Terraform Apply"
-       #if: ${{ inputs.terraform_apply != '' && inputs.terraform_apply == 'yes'}}
+       if: ${{ inputs.terraform_apply == 'yes'}}
        run: terraform apply ${{ inputs.target_environment}}-tfplan
        working-directory: terraform
        shell: bash 
 
-     - name: "Terraform Apply"
-       #if: ${{ inputs.terraform_apply != '' && inputs.terraform_apply == 'yes'}}
-       run: terraform apply ${{ inputs.target_environment}}-tfplan
-       working-directory: terraform
-       shell: bash 
