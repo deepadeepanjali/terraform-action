@@ -14,6 +14,7 @@ runs:
      - name: "Terraform Format"
        id: fmt
        run: |
+         echo "This is terraform -action repo"
          echo "The current directory is $(pwd)"
          terraform fmt -recursive
        working-directory: terraform
