@@ -8,7 +8,7 @@ inputs:
   terraform_apply:
     description: 'Flag to apply Terraform changes (default: no)'
     required: false
-    default: 'no'
+
    
         
 runs:
@@ -52,7 +52,7 @@ runs:
        shell: bash
 
      - name: "Terraform Apply"
-       if: ${{ inputs.terraform_apply == 'yes'}}
+       if: ${{ inputs.terraform_apply != '' && inputs.terraform_apply == 'true'}}
        run: terraform apply ${{ inputs.target_environment}}-tfplan
        working-directory: terraform
        shell: bash 
