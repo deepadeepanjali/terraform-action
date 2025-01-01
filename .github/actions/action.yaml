@@ -45,6 +45,7 @@ runs:
        id: plan
        run: |
          echo 'environment: ${{ inputs.target_environment }}'
+         echo 'environment: ${{ inputs.terraform_apply }}'
          #echo 'Merged to Branch:${{ github.event.pull_request.base.ref }}'
          terraform plan -var-file=${{ inputs.target_environment}}.tfvars -out=${{ inputs.target_environment}}-tfplan
        working-directory: terraform 
