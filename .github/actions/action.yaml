@@ -9,6 +9,10 @@ inputs:
     description: 'Flag to apply Terraform changes (default: no)'
     required: false
 
+  work_directory:
+    description: 'working directory'
+    required: true
+
    
         
 runs:
@@ -18,6 +22,7 @@ runs:
        id: fmt
        run: |
          echo "This is terraform-action repo"
+         echo "work_directory is ${{inputs.work_directory}}"
          echo "The current directory is $(pwd)"
          terraform fmt -recursive
        working-directory: terraform
