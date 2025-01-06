@@ -15,39 +15,32 @@ inputs:
 runs:
     using: "composite"
     steps:
-     - name: "Terraform Format"
-       id: fmt
-       run: |
-         Write-Host "This is terraform-action repo"
-         Write-Host "work_directory is ${{inputs.work_directory}}"
-         Write-Host "The current directory is $(Get-Location)"
-         terraform fmt -recursive
-       working-directory: terraform
-       shell: pwsh  # Using PowerShell instead of bash on Windows
+    - name: "Terraform Format"
+      id: fmt
+      run: |
+        echo This is terraform-action repo
+        echo The current directory is %cd%
+        terraform fmt -recursive
+      working-directory: terraform
+      shell: cmd
 
-     - name: Terraform Init
-       id: init
-       run: terraform init
-       working-directory: terraform
-       shell: pwsh  # Using PowerShell instead of bash on Windows
+    - name: Terraform Init
+      id: init
+      run: terraform init
+      working-directory: terraform
+      shell: cmd 
 
-     - name: "Terraform Validate"
-       id: validate
-       run: terraform validate -no-color
-       working-directory: terraform
-       shell: pwsh  # Using PowerShell instead of bash on Windows
-        
-     - name: Terraform Plan
-       id: plan
-       run: |
-         Write-Host "environment: ${{ inputs.target_environment }}"
-         Write-Host "terraform_apply: ${{ inputs.terraform_apply }}"
-         terraform plan -var-file="${{ inputs.target_environment }}.tfvars" -out="${{ inputs.target_environment }}-tfplan"
-       working-directory: terraform
-       shell: pwsh  # Using PowerShell instead of bash on Windows
+    - name: "Terraform Validate"
+      id: validate
+      run: terraform validate -no-color
+      working-directory: terraform
+      shell: cmd  # Run in Command Prompt
 
-     - name: "Terraform Apply"
-       if: ${{ inputs.terraform_apply != '' && inputs.terraform_apply == 'true' }}
-       run: terraform apply "${{ inputs.target_environment }}-tfplan"
-       working-directory: terraform
-       shell: pwsh  # Using PowerShell instead of bash on Windows
+    - name: Terraform Plan
+      id: plan
+      run: |       
+        echo The current directory is %cd%
+        echo current env is ${{matrix.envn}}
+        terraform plan -var-file=${{matrix.envn}}.tfvars -out=${{matrix.envn}}-tfplan
+      working-directory: terraform
+      shell: cmd 
