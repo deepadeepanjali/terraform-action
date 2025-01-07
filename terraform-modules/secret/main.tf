@@ -24,4 +24,6 @@ resource "azurerm_role_assignment" "secret_officer_role" {
   principal_id       = each.value.ad_group_objectid
   role_definition_name = "Key Vault Secrets Officer"  # Secret Officer role grants create, update, and delete permissions on secrets
   scope              = "${data.azurerm_key_vault.keyvault.id}/secrets/${azurerm_key_vault_secret.secret[each.key].name}"  # Assign to specific secret
+
+  depends_on = [azurerm_key_vault_secret.secret]
 }
