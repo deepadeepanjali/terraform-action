@@ -40,14 +40,9 @@ runs:
             key                  = "terraform.tfstate"
            }
           }
-         TF_BACKEND     
-         terraform init 
+         TF_BACKEND  
          
-         # terraform init \
-         #   -backend-config="storage_account_name=yourstorageaccount" \
-         #   -backend-config="container_name=terraform-state" \
-         #  -backend-config="key=${{ env.STATE_FILE }}" \
-         #   -backend-config="access_key=${{ secrets.AZURE_STORAGE_ACCESS_KEY }}"
+         terraform init     
        working-directory: terraform      
        shell: bash
         
