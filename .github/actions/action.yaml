@@ -31,14 +31,15 @@ runs:
      - name: Terraform Init
        id: init
        run: |
-       cat <<-TF_BACKEND > backend.tf
-      terraform {
-        backend "azurerm" {
-        storage_account_name = "teststoragemy"
-        container_name       = "terraform-state"
-        key                  = "terraform.tfstate"
-       }
-      }
+         cat <<-TF_BACKEND > backend.tf
+         terraform {
+          backend "azurerm" {
+            resource_group_name = "rg-my"
+            storage_account_name = "teststoragemy"
+            container_name       = "terraform-state"
+            key                  = "terraform.tfstate"
+           }
+          }
       TF_BACKEND
       
       terraform init
