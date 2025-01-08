@@ -40,9 +40,9 @@ runs:
             key                  = "terraform.tfstate"
            }
           }
-      TF_BACKEND
-      
-      terraform init
+         TF_BACKEND     
+         terraform init 
+         
          # terraform init \
          #   -backend-config="storage_account_name=yourstorageaccount" \
          #   -backend-config="container_name=terraform-state" \
