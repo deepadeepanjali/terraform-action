@@ -13,10 +13,7 @@ inputs:
     description: 'working directory'
     required: true
 
-  arm_subscription_id:
-    description: 'Subscription id'
-    required: true 
-        
+       
 runs:
     using: "composite"
     steps:
@@ -30,11 +27,7 @@ runs:
        working-directory: terraform
        shell: bash  
        
-    - name: Set ARM_SUBSCRIPTION_ID
-      run: |
-        echo 'subscription id: ${{ inputs.arm_subscription_id }}'
-        echo "ARM_SUBSCRIPTION_ID=${{ inputs.arm_subscription_id }}" >> $GITHUB_ENV
-      shell: bash       
+     
 
      - name: Terraform Init
        id: init
