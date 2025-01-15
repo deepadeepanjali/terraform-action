@@ -32,7 +32,7 @@ runs:
        
     - name: Set ARM_SUBSCRIPTION_ID
       run: |
-        echo ${{ inputs.arm_subscription_id }}
+        echo 'subscription id: ${{ inputs.arm_subscription_id }}'
         echo "ARM_SUBSCRIPTION_ID=${{ inputs.arm_subscription_id }}" >> $GITHUB_ENV
       shell: bash       
 
