@@ -21,7 +21,6 @@ runs:
        id: fmt
        run: |
          echo "$ARM_SUBSCRIPTION_ID" >> test.txt
-         cat test.txt
          echo "This is terraform-action repo"
          echo "work_directory is ${{inputs.work_directory}}"
          echo "The current directory is $(pwd)"
