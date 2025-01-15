@@ -13,7 +13,9 @@ inputs:
     description: 'working directory'
     required: true
 
-   
+  arm_subscription_id:
+    description: 'Subscription id'
+    required: true 
         
 runs:
     using: "composite"
@@ -26,7 +28,13 @@ runs:
          echo "The current directory is $(pwd)"
          terraform fmt -recursive
        working-directory: terraform
-       shell: bash     
+       shell: bash  
+       
+    - name: Set ARM_SUBSCRIPTION_ID
+      run: |
+        echo ${{ inputs.arm_subscription_id }}
+        echo "ARM_SUBSCRIPTION_ID=${{ inputs.arm_subscription_id }}" >> $GITHUB_ENV
+      shell: bash       
 
      - name: Terraform Init
        id: init
