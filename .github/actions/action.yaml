@@ -24,7 +24,7 @@ runs:
          echo "This is terraform-action repo"
          echo "work_directory is ${{inputs.work_directory}}"
          echo "The current directory is $(pwd)"
-         terraform fmt -recursive
+         terraform fmt #-recursive
        working-directory: terraform
        shell: bash  
        
